@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About – International Student Trends</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f9f9f9;
+      color: #333;
+    }
+    nav {
+      background: white;
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 20px;
+      color: #00c3e3;
+    }
+    .logo span {
+      color: #333;
+    }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    .nav-links a {
+      color: #333;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover {
+      color: #00c3e3;
+    }
+    header {
+      background-color: #0b2c3f;
+      padding: 60px 20px;
+      color: white;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+    header p {
+      font-size: 18px;
+      color: #ccc;
+    }
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+    .intro {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      align-items: flex-start;
+    }
+    .intro-text {
+      flex: 2;
+    }
+    .intro-text h2 {
+      color: #007BFF;
+    }
+    .intro-links {
+      flex: 1;
+    }
+    .intro-links ul {
+      list-style: none;
+      padding: 0;
+    }
+    .intro-links li {
+      margin-bottom: 12px;
+    }
+    .intro-links a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+    .intro-links a:hover {
+      text-decoration: underline;
+    }
+    .team {
+      background: #eef2f5;
+      padding: 60px 20px;
+    }
+    .team h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      color: #0b2c3f;
+    }
+    .team-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+    }
+    .team-card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 280px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    .team-card img {
+      height: 80px;
+      margin-bottom: 16px;
+    }
+    .team-card h4 {
+      margin: 0;
+      color: #007BFF;
+    }
+    .team-card p {
+      font-size: 14px;
+      color: #555;
+    }
+    .citation {
+      background: #f3f4f6;
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .citation a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+    .citation a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      background: #0b2c3f;
+      color: #ccc;
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 14px;
+    }
+    footer a {
+      color: #ccc;
+      text-decoration: none;
+    }
+    footer a:hover {
+      color: #00c3e3;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">INTL<span>Map</span></div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+  </nav>
+
+  <header>
+    <h1>About</h1>
+    <p>Built by students. Backed by data. Powered by collaboration.</p>
+  </header>
+
+  <section class="container intro">
+    <div class="intro-text">
+      <h2>What is this platform?</h2>
+      <p>
+        International Student Trends is a public-facing, interactive platform that visualizes key data about the presence and growth of international students in Canada.
+        From top provinces to gender and education trends, the tool is designed for everyone—students, educators, researchers, and policymakers.
+      </p>
+      <p>
+        The platform was developed as a capstone initiative by students of Humber College using real open data and intuitive technologies. With sponsorship and support from York University, the project promotes educational transparency and accessibility.
+      </p>
+    </div>
+    <div class="intro-links">
+      <h3>Explore More</h3>
+      <ul>
+        <li><a href="map_html/index.html">Launch Interactive Map</a></li>
+        <li><a href="faq.html">Frequently Asked Questions</a></li>
+        <li><a href="#contact">Meet the Team</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="team">
+    <h2>Project Contributors</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <img src="sponsors/Humber.png" alt="Humber Logo">
+        <h4>Humber College Developers</h4>
+        <p>A student-led team responsible for building and testing the full application.</p>
+      </div>
+      <div class="team-card">
+        <img src="sponsors/York.png" alt="York Logo">
+        <h4>York University (Sponsor)</h4>
+        <p>Supported this initiative with academic mentorship.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 International Student Trends | <a href="mailto:support@studenttrends.ca">support@studenttrends.ca</a> | Sponsored by <a href="https://yorku.ca" target="_blank">York University</a></p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Student Table</title>
+  <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+  <script src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f6f9fc;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-top: 10px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 20px 0;
+      align-items: center;
+    }
+
+    input[type="text"], select, input[type="range"] {
+      padding: 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .back-btn {
+      background-color: #00c3e3;
+      color: white;
+    }
+
+    .export-btn {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .dark-btn {
+      background-color: #ffbb00;
+      color: black;
+    }
+
+    #tabulator-table {
+      margin-top: 20px;
+    }
+
+    .dark-mode {
+      background: #1e1e1e;
+      color: white;
+    }
+
+    .dark-mode select,
+    .dark-mode input[type="text"],
+    .dark-mode input[type="range"] {
+      background-color: #333;
+      color: white;
+      border: 1px solid #555;
+    }
+
+    .dark-mode button {
+      opacity: 0.95;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <button onclick="window.location.href='index.html'" class="back-btn">← Back to Home</button>
+    <h1>International Student Dashboard</h1>
+  </div>
+
+  <div class="filters">
+    <input type="text" id="searchInput" placeholder="🔍 Search..." />
+
+    <label for="yearFilter">Year:</label>
+    <select id="yearFilter"><option value="">All</option></select>
+
+    <label for="institutionFilter">Institution:</label>
+    <select id="institutionFilter"><option value="">All</option></select>
+
+    <label for="genderFilter">Gender:</label>
+    <select id="genderFilter"><option value="">All</option></select>
+
+    <label for="yearSlider">Year Slider:</label>
+    <input type="range" id="yearSlider" min="2010" max="2023" step="1" value="2022" />
+    <span id="yearDisplay">2022</span>
+  </div>
+
+  <div id="tabulator-table"></div>
+
+  <div style="margin-top: 20px;">
+    <button onclick="exportTable()" class="export-btn">⬇️ Export CSV</button>
+    <button onclick="toggleDarkMode()" class="dark-btn">🌙 Toggle Dark Mode</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html> 

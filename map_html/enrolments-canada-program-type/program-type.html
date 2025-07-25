@@ -1,0 +1,715 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/filter.css">
+<link rel="stylesheet" href="css/nouislider.min.css">
+        <link rel="stylesheet" href="css/leaflet.photon.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet.photon.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="js/tailDT.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="js/wNumb.js"></script>
+        <script src="data/navigationbase_1.js"></script>
+        <script src="data/student_enrolments_program_type_2.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:false, maxZoom:28, minZoom:1
+        }).fitBounds([[30.803721804045082,-132.02994561902528],[62.13075085519311,-55.27284219464409]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        // remove popup's row if "visible-with-data"
+        function removeEmptyRowsFromPopupContent(content, feature) {
+         var tempDiv = document.createElement('div');
+         tempDiv.innerHTML = content;
+         var rows = tempDiv.querySelectorAll('tr');
+         for (var i = 0; i < rows.length; i++) {
+             var td = rows[i].querySelector('td.visible-with-data');
+             var key = td ? td.id : '';
+             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                 rows[i].parentNode.removeChild(rows[i]);
+             }
+         }
+         return tempDiv.innerHTML;
+        }
+        // add class to format popup if it contains media
+		function addClassToPopupIfMedia(content, popup) {
+			var tempDiv = document.createElement('div');
+			tempDiv.innerHTML = content;
+			if (tempDiv.querySelector('td img')) {
+				popup._contentNode.classList.add('media');
+					// Delay to force the redraw
+					setTimeout(function() {
+						popup.update();
+					}, 10);
+			} else {
+				popup._contentNode.classList.remove('media');
+			}
+		}
+        var zoomControl = L.control.zoom({
+            position: 'topleft'
+        }).addTo(map);
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0].innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0].className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_OSMStandard_0');
+        map.getPane('pane_OSMStandard_0').style.zIndex = 400;
+        var layer_OSMStandard_0 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OSMStandard_0',
+            opacity: 0.6,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OSMStandard_0;
+        map.addLayer(layer_OSMStandard_0);
+        function pop_navigationbase_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nav_html'] !== null ? autolinker.link(String(feature.properties['nav_html']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['-'] !== null ? autolinker.link(String(feature.properties['-']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_navigationbase_1_0() {
+            return {
+                pane: 'pane_navigationbase_1',
+                stroke: false, 
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_navigationbase_1');
+        map.getPane('pane_navigationbase_1').style.zIndex = 401;
+        map.getPane('pane_navigationbase_1').style['mix-blend-mode'] = 'normal';
+        var layer_navigationbase_1 = new L.geoJson(json_navigationbase_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_navigationbase_1',
+            layerName: 'layer_navigationbase_1',
+            pane: 'pane_navigationbase_1',
+            onEachFeature: pop_navigationbase_1,
+            style: style_navigationbase_1_0,
+        });
+        bounds_group.addLayer(layer_navigationbase_1);
+        map.addLayer(layer_navigationbase_1);
+        function pop_student_enrolments_program_type_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">fid</th>\
+                        <td>' + (feature.properties['fid'] !== null ? autolinker.link(String(feature.properties['fid']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">_uid_</th>\
+                        <td>' + (feature.properties['_uid_'] !== null ? autolinker.link(String(feature.properties['_uid_']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">psis_code</th>\
+                        <td>' + (feature.properties['psis_code'] !== null ? autolinker.link(String(feature.properties['psis_code']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">psis_name</th>\
+                        <td>' + (feature.properties['psis_name'] !== null ? autolinker.link(String(feature.properties['psis_name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">education_data_name</th>\
+                        <td>' + (feature.properties['education_data_name'] !== null ? autolinker.link(String(feature.properties['education_data_name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ref_date</th>\
+                        <td>' + (feature.properties['ref_date'] !== null ? autolinker.link(String(feature.properties['ref_date']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">start_date</th>\
+                        <td>' + (feature.properties['start_date'] !== null ? autolinker.link(String(feature.properties['start_date']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">end_date</th>\
+                        <td>' + (feature.properties['end_date'] !== null ? autolinker.link(String(feature.properties['end_date']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">total_enrollment</th>\
+                        <td>' + (feature.properties['total_enrollment'] !== null ? autolinker.link(String(feature.properties['total_enrollment']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Program type</th>\
+                        <td>' + (feature.properties['Program type'] !== null ? autolinker.link(String(feature.properties['Program type']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">city</th>\
+                        <td>' + (feature.properties['city'] !== null ? autolinker.link(String(feature.properties['city']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">province</th>\
+                        <td>' + (feature.properties['province'] !== null ? autolinker.link(String(feature.properties['province']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">latitude</th>\
+                        <td>' + (feature.properties['latitude'] !== null ? autolinker.link(String(feature.properties['latitude']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">longitude</th>\
+                        <td>' + (feature.properties['longitude'] !== null ? autolinker.link(String(feature.properties['longitude']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_student_enrolments_program_type_2_0(feature) {
+            if (feature.properties['total_enrollment'] >= 0.000000 && feature.properties['total_enrollment'] <= 996.000000 ) {
+                return {
+                pane: 'pane_student_enrolments_program_type_2',
+                radius: 2.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,0.8)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,182,111,0.8)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['total_enrollment'] >= 996.000000 && feature.properties['total_enrollment'] <= 2802.000000 ) {
+                return {
+                pane: 'pane_student_enrolments_program_type_2',
+                radius: 5.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,0.8)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,182,111,0.8)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['total_enrollment'] >= 2802.000000 && feature.properties['total_enrollment'] <= 5457.000000 ) {
+                return {
+                pane: 'pane_student_enrolments_program_type_2',
+                radius: 8.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,0.8)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,182,111,0.8)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['total_enrollment'] >= 5457.000000 && feature.properties['total_enrollment'] <= 9855.000000 ) {
+                return {
+                pane: 'pane_student_enrolments_program_type_2',
+                radius: 11.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,0.8)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,182,111,0.8)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['total_enrollment'] >= 9855.000000 && feature.properties['total_enrollment'] <= 14997.000000 ) {
+                return {
+                pane: 'pane_student_enrolments_program_type_2',
+                radius: 14.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,0.8)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,182,111,0.8)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['total_enrollment'] >= 14997.000000 && feature.properties['total_enrollment'] <= 20913.000000 ) {
+                return {
+                pane: 'pane_student_enrolments_program_type_2',
+                radius: 17.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,0.8)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,182,111,0.8)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['total_enrollment'] >= 20913.000000 && feature.properties['total_enrollment'] <= 27315.000000 ) {
+                return {
+                pane: 'pane_student_enrolments_program_type_2',
+                radius: 20.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,0.8)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,182,111,0.8)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['total_enrollment'] >= 27315.000000 && feature.properties['total_enrollment'] <= 37374.000000 ) {
+                return {
+                pane: 'pane_student_enrolments_program_type_2',
+                radius: 23.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,0.8)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,182,111,0.8)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['total_enrollment'] >= 37374.000000 && feature.properties['total_enrollment'] <= 49071.000000 ) {
+                return {
+                pane: 'pane_student_enrolments_program_type_2',
+                radius: 26.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,0.8)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,182,111,0.8)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['total_enrollment'] >= 49071.000000 && feature.properties['total_enrollment'] <= 71703.000000 ) {
+                return {
+                pane: 'pane_student_enrolments_program_type_2',
+                radius: 29.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,0.8)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,182,111,0.8)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['total_enrollment'] >= 71703.000000 && feature.properties['total_enrollment'] <= 144918.000000 ) {
+                return {
+                pane: 'pane_student_enrolments_program_type_2',
+                radius: 32.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,0.8)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,182,111,0.8)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_student_enrolments_program_type_2');
+        map.getPane('pane_student_enrolments_program_type_2').style.zIndex = 402;
+        map.getPane('pane_student_enrolments_program_type_2').style['mix-blend-mode'] = 'normal';
+        var layer_student_enrolments_program_type_2 = new L.geoJson(json_student_enrolments_program_type_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_student_enrolments_program_type_2',
+            layerName: 'layer_student_enrolments_program_type_2',
+            pane: 'pane_student_enrolments_program_type_2',
+            onEachFeature: pop_student_enrolments_program_type_2,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_student_enrolments_program_type_2_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_student_enrolments_program_type_2);
+        map.addLayer(layer_student_enrolments_program_type_2);
+        const url = {"Nominatim": "https://nominatim.openstreetmap.org/search?format=geojson&addressdetails=1&",
+        "BAN": "https://api-adresse.data.gouv.fr/search/?"}
+        var photonControl = L.control.photon({
+            url: url["Nominatim"],
+            feedbackLabel: '',
+            position: 'topleft',
+            includePosition: true,
+            initial: true,
+            // resultsHandler: myHandler,
+        }).addTo(map);
+        photonControl._container.childNodes[0].style.borderRadius="10px"
+        // Create a variable to store the geoJSON data
+        var x = null;
+        // Create a variable to store the marker
+        var marker = null;
+        // Add an event listener to the Photon control to create a marker from the returned geoJSON data
+        var z = null;
+        photonControl.on('selected', function(e) {
+            console.log(photonControl.search.resultsContainer);
+            if (x != null) {
+                map.removeLayer(obj3.marker);
+                map.removeLayer(x);
+            }
+            obj2.gcd = e.choice;
+            x = L.geoJSON(obj2.gcd).addTo(map);
+            var label = typeof obj2.gcd.properties.label === 'undefined' ? obj2.gcd.properties.display_name : obj2.gcd.properties.label;
+            obj3.marker = L.marker(x.getLayers()[0].getLatLng()).bindPopup(label).addTo(map);
+            map.setView(x.getLayers()[0].getLatLng(), 17);
+            z = typeof e.choice.properties.label === 'undefined'? e.choice.properties.display_name : e.choice.properties.label;
+            console.log(e);
+            e.target.input.value = z;
+        });
+        var search = document.getElementsByClassName("leaflet-photon leaflet-control")[0];
+        search.classList.add("leaflet-control-search")
+        search.style.display = "flex";
+        search.style.backgroundColor="rgba(255,255,255,0.5)" 
+
+        // Créer le nouvel élément bouton
+        var button = document.createElement("div");
+        button.id = "gcd-button-control";
+        button.className = "gcd-gl-btn fa fa-search search-button";
+
+        // Ajouter le bouton à l'élément parent
+        search.insertBefore(button, search.firstChild);
+        last = search.lastChild;
+        last.style.display = "none";
+        button.addEventListener("click", function (e) {
+            if (last.style.display === "none") {
+                last.style.display = "block";
+            } else {
+                last.style.display = "none";
+            }
+        });
+        var overlaysTree = [
+            {label: 'student_enrolments_program_type<br /><table><tr><td style="text-align: center;"><img src="legend/student_enrolments_program_type_2_09960.png" /></td><td>0 - 996</td></tr><tr><td style="text-align: center;"><img src="legend/student_enrolments_program_type_2_99628021.png" /></td><td>996 - 2802</td></tr><tr><td style="text-align: center;"><img src="legend/student_enrolments_program_type_2_280254572.png" /></td><td>2802 - 5457</td></tr><tr><td style="text-align: center;"><img src="legend/student_enrolments_program_type_2_545798553.png" /></td><td>5457 - 9855</td></tr><tr><td style="text-align: center;"><img src="legend/student_enrolments_program_type_2_9855149974.png" /></td><td>9855 - 14997</td></tr><tr><td style="text-align: center;"><img src="legend/student_enrolments_program_type_2_14997209135.png" /></td><td>14997 - 20913</td></tr><tr><td style="text-align: center;"><img src="legend/student_enrolments_program_type_2_20913273156.png" /></td><td>20913 - 27315</td></tr><tr><td style="text-align: center;"><img src="legend/student_enrolments_program_type_2_27315373747.png" /></td><td>27315 - 37374</td></tr><tr><td style="text-align: center;"><img src="legend/student_enrolments_program_type_2_37374490718.png" /></td><td>37374 - 49071</td></tr><tr><td style="text-align: center;"><img src="legend/student_enrolments_program_type_2_49071717039.png" /></td><td>49071 - 71703</td></tr><tr><td style="text-align: center;"><img src="legend/student_enrolments_program_type_2_7170314491810.png" /></td><td>71703 - 144918</td></tr></table>', layer: layer_student_enrolments_program_type_2},
+            {label: '<img src="legend/navigationbase_1.png" /> navigation-base', layer: layer_navigationbase_1},
+            {label: "OSM Standard", layer: layer_OSMStandard_0, radioGroup: 'bm' },]
+        var lay = L.control.layers.tree(null, overlaysTree,{
+            //namedToggle: true,
+            //selectorBack: false,
+            //closedSymbol: '&#8862; &#x1f5c0;',
+            //openedSymbol: '&#8863; &#x1f5c1;',
+            //collapseAll: 'Collapse all',
+            //expandAll: 'Expand all',
+            collapsed: true,
+        });
+        lay.addTo(map);
+        setBounds();
+        var mapDiv = document.getElementById('map');
+        var row = document.createElement('div');
+        row.className="row";
+        row.id="all";
+        row.style.height = "100%";
+        var col1 = document.createElement('div');
+        col1.className="col9";
+        col1.id = "mapWindow";
+        col1.style.height = "99%";
+        col1.style.width = "80%";
+        col1.style.display = "inline-block";
+        var col2 = document.createElement('div');
+        col2.className="col3";
+        col2.id = "menu";
+        col2.style.display = "inline-block";
+        mapDiv.parentNode.insertBefore(row, mapDiv);
+        document.getElementById("all").appendChild(col1);
+        document.getElementById("all").appendChild(col2);
+        col1.appendChild(mapDiv)
+        var Filters = {"total_enrollment": "real","ref_date": "str","Program type": "str"};
+        function filterFunc() {
+          map.eachLayer(function(lyr){
+          if ("options" in lyr && "dataVar" in lyr["options"]){
+            features = this[lyr["options"]["dataVar"]].features.slice(0);
+            try{
+              for (key in Filters){
+                keyS = key.replace(/[^a-zA-Z0-9_]/g, "")
+                if (Filters[key] == "str" || Filters[key] == "bool"){
+                  var selection = [];
+                  var options = document.getElementById("sel_" + keyS).options
+                  for (var i=0; i < options.length; i++) {
+                    if (options[i].selected) selection.push(options[i].value);
+                  }
+                    try{
+                      if (key in features[0].properties){
+                        for (i = features.length - 1;
+                          i >= 0; --i){
+                          if (selection.indexOf(
+                          features[i].properties[key])<0
+                          && selection.length>0) {
+                          features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                  }
+                }
+                if (Filters[key] == "int"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (parseInt(features[i].properties[key])
+                          < sliderVals[0]
+                          || parseInt(features[i].properties[key])
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "real"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (features[i].properties[key]
+                          < sliderVals[0]
+                          || features[i].properties[key]
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "date"
+                  || Filters[key] == "datetime"
+                  || Filters[key] == "time"){
+                  try{
+                    if (key in features[0].properties){
+                      HTMLkey = key.replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '');
+                      startdate = document.getElementById("dat_" +
+                        HTMLkey + "_date1").value.replace(" ", "T");
+                      enddate = document.getElementById("dat_" +
+                        HTMLkey + "_date2").value.replace(" ", "T");
+                      for (i = features.length - 1; i >= 0; --i){
+                        if (features[i].properties[key] < startdate
+                          || features[i].properties[key] > enddate){
+                          features.splice(i,1);
+                        }
+                      }
+                    }
+                  } catch(err){
+                  }
+                }
+              }
+            } catch(err){
+            }
+          this[lyr["options"]["layerName"]].clearLayers();
+          this[lyr["options"]["layerName"]].addData(features);
+          }
+          })
+        }
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_total_enrollment = document.createElement("div");
+            div_total_enrollment.id = "div_total_enrollment";
+            div_total_enrollment.className = "slider";
+            document.getElementById("menu").appendChild(div_total_enrollment);
+            var lab_total_enrollment = document.createElement('div');
+            lab_total_enrollment.innerHTML  = 'total_enrollment: <span id="val_total_enrollment"></span>';
+            lab_total_enrollment.className = 'filterlabel';
+            document.getElementById("menu").appendChild(lab_total_enrollment);
+            var reset_total_enrollment = document.createElement('div');
+            reset_total_enrollment.innerHTML = 'clear filter';
+            reset_total_enrollment.className = 'filterlabel';
+            lab_total_enrollment.className = 'filterlabel';
+            reset_total_enrollment.onclick = function() {
+                sel_total_enrollment.noUiSlider.reset();
+            };
+            document.getElementById("menu").appendChild(reset_total_enrollment);
+            var sel_total_enrollment = document.getElementById('div_total_enrollment');
+            noUiSlider.create(sel_total_enrollment, {
+                connect: true,
+                start: [3.0, 144918.0],
+                range: {
+                min: 3.0,
+                max: 144918.0
+                }
+            });
+            sel_total_enrollment.noUiSlider.on('update', function (values) {
+            val_total_enrollment = document.getElementById('val_total_enrollment');
+            val_total_enrollment.innerHTML = values.join(' - ');
+                filterFunc()
+            });
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_ref_date = document.createElement('div');
+            div_ref_date.id = "div_ref_date";
+            div_ref_date.className= "filterselect";
+            document.getElementById("menu").appendChild(div_ref_date);
+            sel_ref_date = document.createElement('select');
+            sel_ref_date.multiple = true;
+            sel_ref_date.size = 10;
+            sel_ref_date.id = "sel_ref_date";
+            var ref_date_options_str = "<option value='' unselected></option>";
+            sel_ref_date.onchange = function(){filterFunc()};
+            ref_date_options_str  += '<option value="2009/2010">2009/2010</option>';
+            ref_date_options_str  += '<option value="2010/2011">2010/2011</option>';
+            ref_date_options_str  += '<option value="2011/2012">2011/2012</option>';
+            ref_date_options_str  += '<option value="2012/2013">2012/2013</option>';
+            ref_date_options_str  += '<option value="2013/2014">2013/2014</option>';
+            ref_date_options_str  += '<option value="2014/2015">2014/2015</option>';
+            ref_date_options_str  += '<option value="2015/2016">2015/2016</option>';
+            ref_date_options_str  += '<option value="2016/2017">2016/2017</option>';
+            ref_date_options_str  += '<option value="2017/2018">2017/2018</option>';
+            ref_date_options_str  += '<option value="2018/2019">2018/2019</option>';
+            ref_date_options_str  += '<option value="2019/2020">2019/2020</option>';
+            ref_date_options_str  += '<option value="2020/2021">2020/2021</option>';
+            ref_date_options_str  += '<option value="2021/2022">2021/2022</option>';
+            ref_date_options_str  += '<option value="2022/2023">2022/2023</option>';
+            sel_ref_date.innerHTML = ref_date_options_str;
+            div_ref_date.appendChild(sel_ref_date);
+            var lab_ref_date = document.createElement('div');
+            lab_ref_date.innerHTML = 'ref_date';
+            lab_ref_date.className = 'filterlabel';
+            div_ref_date.appendChild(lab_ref_date);
+            var reset_ref_date = document.createElement('div');
+            reset_ref_date.innerHTML = 'clear filter';
+            reset_ref_date.className = 'filterlabel';
+            reset_ref_date.onclick = function() {
+                var options = document.getElementById("sel_ref_date").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_ref_date.appendChild(reset_ref_date);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_Programtype = document.createElement('div');
+            div_Programtype.id = "div_Programtype";
+            div_Programtype.className= "filterselect";
+            document.getElementById("menu").appendChild(div_Programtype);
+            sel_Programtype = document.createElement('select');
+            sel_Programtype.multiple = true;
+            sel_Programtype.size = 10;
+            sel_Programtype.id = "sel_Programtype";
+            var Programtype_options_str = "<option value='' unselected></option>";
+            sel_Programtype.onchange = function(){filterFunc()};
+            Programtype_options_str  += '<option value="Basic education and skills program">Basic education and skills program</option>';
+            Programtype_options_str  += '<option value="Career, technical or professional training program">Career, technical or professional training program</option>';
+            Programtype_options_str  += '<option value="Graduate program (above the third cycle)">Graduate program (above the third cycle)</option>';
+            Programtype_options_str  += '<option value="Graduate program (second cycle)">Graduate program (second cycle)</option>';
+            Programtype_options_str  += '<option value="Graduate program (third cycle)">Graduate program (third cycle)</option>';
+            Programtype_options_str  += '<option value="Graduate qualifying program (second cycle)">Graduate qualifying program (second cycle)</option>';
+            Programtype_options_str  += '<option value="Graduate qualifying program (third cycle)">Graduate qualifying program (third cycle)</option>';
+            Programtype_options_str  += '<option value="Health-related residency program">Health-related residency program</option>';
+            Programtype_options_str  += '<option value="Non-program (credit, graduate)">Non-program (credit, graduate)</option>';
+            Programtype_options_str  += '<option value="Non-program (credit, other postsecondary)">Non-program (credit, other postsecondary)</option>';
+            Programtype_options_str  += '<option value="Non-program (credit, undergraduate)">Non-program (credit, undergraduate)</option>';
+            Programtype_options_str  += '<option value="Non-program (non-credit)">Non-program (non-credit)</option>';
+            Programtype_options_str  += '<option value="Other programs">Other programs</option>';
+            Programtype_options_str  += '<option value="Post career, technical or professional training program">Post career, technical or professional training program</option>';
+            Programtype_options_str  += '<option value="Post-baccalaureate non-graduate program">Post-baccalaureate non-graduate program</option>';
+            Programtype_options_str  += '<option value="Pre-university program">Pre-university program</option>';
+            Programtype_options_str  += '<option value="Qualifying program for career, technical or pre-university">Qualifying program for career, technical or pre-university</option>';
+            Programtype_options_str  += '<option value="Undergraduate program">Undergraduate program</option>';
+            Programtype_options_str  += '<option value="Undergraduate qualifying program">Undergraduate qualifying program</option>';
+            sel_Programtype.innerHTML = Programtype_options_str;
+            div_Programtype.appendChild(sel_Programtype);
+            var lab_Programtype = document.createElement('div');
+            lab_Programtype.innerHTML = 'Program type';
+            lab_Programtype.className = 'filterlabel';
+            div_Programtype.appendChild(lab_Programtype);
+            var reset_Programtype = document.createElement('div');
+            reset_Programtype.innerHTML = 'clear filter';
+            reset_Programtype.className = 'filterlabel';
+            reset_Programtype.onclick = function() {
+                var options = document.getElementById("sel_Programtype").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_Programtype.appendChild(reset_Programtype);
+        </script>
+    </body>
+</html>

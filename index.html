@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>International Student Trends</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #0b2c3f;
+      color: white;
+    }
+
+    nav {
+      background: white;
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 20px;
+      color: #00c3e3;
+    }
+
+    .logo span {
+      color: #333;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: #333;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      color: #00c3e3;
+    }
+
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      height: 100vh;
+      max-height: 700px;
+    }
+
+    .hero-text {
+      flex: 1;
+      padding: 80px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 300px;
+    }
+
+    .hero-text h1 {
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .hero-text p {
+      font-size: 18px;
+      color: #cfd8dc;
+      max-width: 500px;
+    }
+
+    .actions {
+      margin-top: 30px;
+      position: relative;
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-btn {
+      background-color: #00c3e3;
+      color: #003d56;
+      padding: 14px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 280px;
+      max-height: 300px;
+      overflow-y: auto;
+      border-radius: 6px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      z-index: 100;
+    }
+
+    .dropdown-content a {
+      color: #003d56;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      font-weight: 500;
+      border-bottom: 1px solid #eee;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .btn {
+      padding: 14px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .btn-secondary {
+      margin-left: 12px;
+      background-color: #007bff;
+      color: white;
+    }
+
+    .hero video {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      min-width: 400px;
+    }
+
+    footer {
+      background: #0b2c3f;
+      color: #ccc;
+      padding: 40px 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">INTL<span>Map</span></div>
+  <div class="nav-links">
+    <a href="about.html">About</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+</nav>
+
+<header>
+  <div class="hero">
+    <div class="hero-text">
+      <h1>International Student Trends</h1>
+      <p>A free and interactive platform for global student data visualization.</p>
+      <div class="actions">
+        <div class="dropdown">
+          <button class="dropdown-btn">📊 Explore Student Data</button>
+          <div class="dropdown-content">
+            <a href="phase1.html">Toronto (Phase 1)</a>
+            <a href="ontario.html">Ontario</a>
+            <a href="alberta.html">Alberta</a>
+            <a href="BritishColumbia.html">British Columbia</a>
+            <a href="manitoba.html">Manitoba</a>
+            <a href="newbrunswick.html">New Brunswick</a>
+            <a href="novascotia.html">Nova Scotia</a>
+            <a href="PrinceEdward.html">Prince Edward Island</a>
+            <a href="quebec.html">Quebec</a>
+            <a href="saskatchewan.html">Saskatchewan</a>
+            <a href="yukon.html">Yukon</a>
+          </div>
+        </div>
+        <a href="map_html/index.html" class="btn btn-secondary">🗺️ Explore Interactive Maps</a>
+      </div>
+    </div>
+    <video autoplay muted loop>
+      <source src="videos/intro.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</header>
+
+<footer>
+  <p>© 2025 International Student Trends Project. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
