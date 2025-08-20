@@ -3,213 +3,830 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="favicon.png" type="image/png">
   <title>About – International Student Trends</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: #f9f9f9;
-      color: #333;
+    :root {
+      --primary: #2563eb;
+      --primary-light: #3b82f6;
+      --primary-dark: #1d4ed8;
+      --secondary: #06b6d4;
+      --dark: #0f172a;
+      --light: #f8fafc;
+      --gray: #64748b;
+      --light-gray: #e2e8f0;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
     }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    /* Smooth scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    /* Navigation */
     nav {
-      background: white;
-      padding: 14px 40px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      box-shadow: var(--shadow-sm);
       position: sticky;
       top: 0;
       z-index: 1000;
+      transition: var(--transition);
     }
+    
+    nav.scrolled {
+      padding: 0.75rem 2rem;
+      box-shadow: var(--shadow-md);
+    }
+    
     .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
       font-weight: 700;
-      font-size: 20px;
-      color: #00c3e3;
+      font-size: 1.25rem;
+      color: var(--primary);
+      text-decoration: none;
+      transition: var(--transition);
     }
-    .logo span {
-      color: #333;
+    
+    .logo:hover {
+      opacity: 0.9;
     }
+    
+    .logo img {
+      height: 2.5rem;
+      transition: var(--transition);
+    }
+    
+    nav.scrolled .logo img {
+      height: 2rem;
+    }
+    
     .nav-links {
       display: flex;
-      gap: 24px;
+      gap: 1.5rem;
       align-items: center;
     }
+    
     .nav-links a {
-      color: #333;
+      color: var(--dark);
       text-decoration: none;
       font-weight: 500;
-      transition: color 0.3s;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      position: relative;
+      padding: 0.5rem 0;
     }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary);
+      transition: var(--transition);
+    }
+    
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+    
     .nav-links a:hover {
-      color: #00c3e3;
+      color: var(--primary);
     }
-    header {
-      background-color: #0b2c3f;
-      padding: 60px 20px;
+    
+    .btn-header {
+      background-color: var(--primary);
       color: white;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .btn-header:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--dark);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    /* Page Header */
+    .page-header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      padding: 6rem 2rem 4rem;
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
-    header h1 {
-      font-size: 36px;
-      margin-bottom: 10px;
+    
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==');
+      opacity: 0.3;
     }
-    header p {
-      font-size: 18px;
-      color: #ccc;
+    
+    .page-header-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
     }
+    
+    .page-header h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    
+    .page-header p {
+      font-size: 1.25rem;
+      opacity: 0.9;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    /* About Content */
+    .section {
+      padding: 5rem 2rem;
+      position: relative;
+    }
+    
     .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-    .intro {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 40px;
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    
+    .section-title h2 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+    
+    .section-title p {
+      color: var(--gray);
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 1.125rem;
+    }
+    
+    .about-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 3rem;
       align-items: flex-start;
     }
-    .intro-text {
-      flex: 2;
+    
+    .about-content h3 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
     }
-    .intro-text h2 {
-      color: #007BFF;
+    
+    .about-content p {
+      margin-bottom: 1.5rem;
+      color: var(--dark);
+      line-height: 1.7;
     }
-    .intro-links {
-      flex: 1;
+    
+    .quick-links {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 6rem;
     }
-    .intro-links ul {
+    
+    .quick-links h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+    }
+    
+    .quick-links ul {
       list-style: none;
-      padding: 0;
     }
-    .intro-links li {
-      margin-bottom: 12px;
+    
+    .quick-links li {
+      margin-bottom: 1rem;
     }
-    .intro-links a {
-      color: #007BFF;
+    
+    .quick-links a {
+      color: var(--primary);
       text-decoration: none;
-    }
-    .intro-links a:hover {
-      text-decoration: underline;
-    }
-    .team {
-      background: #eef2f5;
-      padding: 60px 20px;
-    }
-    .team h2 {
-      text-align: center;
-      margin-bottom: 40px;
-      color: #0b2c3f;
-    }
-    .team-grid {
+      font-weight: 500;
       display: flex;
-      flex-wrap: wrap;
-      gap: 30px;
-      justify-content: center;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-md);
+      transition: var(--transition);
     }
+    
+    .quick-links a:hover {
+      background-color: rgba(37, 99, 235, 0.1);
+      transform: translateX(5px);
+    }
+    
+    .quick-links i {
+      width: 1.5rem;
+      text-align: center;
+      color: var(--primary);
+    }
+    
+    /* Team Section */
+    .team-section {
+      background-color: #f8fafc;
+    }
+    
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
     .team-card {
       background: white;
-      padding: 20px;
-      border-radius: 10px;
-      width: 280px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
       text-align: center;
+      border: 1px solid var(--light-gray);
     }
+    
+    .team-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+    
     .team-card img {
-      height: 80px;
-      margin-bottom: 16px;
+      height: 100px;
+      width: auto;
+      margin: 0 auto 1.5rem;
+      display: block;
+      filter: grayscale(100%) contrast(1.2);
+      transition: var(--transition);
     }
+    
+    .team-card:hover img {
+      filter: none;
+    }
+    
     .team-card h4 {
-      margin: 0;
-      color: #007BFF;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
     }
+    
     .team-card p {
-      font-size: 14px;
-      color: #555;
+      color: var(--gray);
+      margin-bottom: 1.5rem;
     }
-    .citation {
-      background: #f3f4f6;
-      padding: 60px 20px;
+    
+    /* Values Section */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .value-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
       text-align: center;
+      border-top: 4px solid var(--primary);
     }
-    .citation a {
-      color: #007BFF;
-      text-decoration: none;
+    
+    .value-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
     }
-    .citation a:hover {
-      text-decoration: underline;
+    
+    .value-icon {
+      width: 3.5rem;
+      height: 3.5rem;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      color: white;
+      font-size: 1.5rem;
     }
+    
+    .value-card h4 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+    
+    .value-card p {
+      color: var(--gray);
+    }
+    
+    /* Footer */
     footer {
-      background: #0b2c3f;
-      color: #ccc;
-      padding: 40px 20px;
-      text-align: center;
-      font-size: 14px;
+      background-color: var(--dark);
+      color: rgba(255, 255, 255, 0.8);
+      padding: 4rem 2rem 2rem;
     }
-    footer a {
-      color: #ccc;
+    
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .footer-col h4 {
+      color: white;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.75rem;
+    }
+    
+    .footer-col h4::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+    }
+    
+    .footer-col p {
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+    
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
       text-decoration: none;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-    footer a:hover {
-      color: #00c3e3;
+    
+    .footer-links a:hover {
+      color: white;
+      transform: translateX(5px);
+    }
+    
+    .footer-links a i {
+      font-size: 0.8rem;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: var(--transition);
+    }
+    
+    .social-links a:hover {
+      background-color: var(--primary);
+      transform: translateY(-3px);
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.8s ease forwards;
+    }
+    
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+    
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .quick-links {
+        position: static;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .page-header h1 {
+        font-size: 2.25rem;
+      }
+      
+      .page-header p {
+        font-size: 1.1rem;
+      }
+      
+      .section {
+        padding: 3rem 1.5rem;
+      }
+      
+      .section-title h2 {
+        font-size: 2rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      nav {
+        padding: 1rem;
+      }
+      
+      .page-header {
+        padding: 4rem 1rem 3rem;
+      }
+      
+      .page-header h1 {
+        font-size: 2rem;
+      }
+      
+      .section {
+        padding: 2rem 1rem;
+      }
+      
+      .section-title h2 {
+        font-size: 1.75rem;
+      }
     }
   </style>
 </head>
 <body>
-  <nav>
-    <div class="logo">INTL<span>Map</span></div>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="faq.html">FAQ</a>
-      <a href="contact.html">Contact Us</a>
+  <!-- Navigation -->
+  <nav id="navbar">
+    <a href="../index.html" class="logo">
+      <img src="../images/Logo.png" alt="INTLMap Logo" style="height: 60px; margin-right: 10px;">
+    </a>
+    <span style="font-weight: 600; font-size: 1.5rem; color: var(--dark); white-space: nowrap;">
+  Data Visualization of International Student Distribution in Canada
+</span>
+    <button class="mobile-menu-btn" id="menuBtn">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="../index.html">Home</a>
+      <a href="about.html" class="active">About</a>
+      <a href="../faq.html">FAQ</a>
+      <a href="../contact.html">Contact</a>
     </div>
   </nav>
 
-  <header>
-    <h1>About</h1>
-    <p>Built by students. Backed by data. Powered by collaboration.</p>
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="page-header-content fade-in">
+      <h1>About Our Platform</h1>
+      <p>Built by students. Backed by data. Powered by collaboration.</p>
+    </div>
   </header>
 
-  <section class="container intro">
-    <div class="intro-text">
-      <h2>What is this platform?</h2>
-      <p>
-        International Student Trends is a public-facing, interactive platform that visualizes key data about the presence and growth of international students in Canada.
-        From top provinces to gender and education trends, the tool is designed for everyone—students, educators, researchers, and policymakers.
-      </p>
-      <p>
-        The platform was developed as a capstone initiative by students of Humber College using real open data and intuitive technologies. With sponsorship and support from York University, the project promotes educational transparency and accessibility.
-      </p>
+  <!-- About Content -->
+  <section class="section">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-content fade-in">
+          <h3>Our Mission</h3>
+          <p>
+            Student Trends is a public-facing, interactive platform that visualizes key data about the presence and growth of postsecondary students in Canada. From top provinces to gender and education trends, the tool is designed for everyone—students, educators, researchers, and policymakers.
+          </p>
+          <p>
+            We believe that transparent access to educational data empowers better decision-making at all levels. Our goal is to make complex international student data understandable and actionable through intuitive visualizations.
+          </p>
+          
+          <h3 class="fade-in delay-1">Our Story</h3>
+          <p class="fade-in delay-1">
+            The platform was developed as a capstone initiative by students of Humber College using real open data and intuitive technologies. What began as an academic project has grown into a valuable resource for understanding global student mobility patterns.
+          </p>
+          <p class="fade-in delay-1">
+            With sponsorship and support from York University, the project promotes educational transparency and accessibility. Our team of student developers worked closely with academic advisors to ensure the platform meets the needs of diverse users.
+          </p>
+          
+          <div class="fade-in delay-2">
+            <h3>Our Values</h3>
+            <div class="values-grid">
+              <div class="value-card">
+                <div class="value-icon">
+                  <i class="fas fa-lock-open"></i>
+                </div>
+                <h4>Transparency</h4>
+                <p>We believe educational data should be freely accessible to all stakeholders.</p>
+              </div>
+              <div class="value-card">
+                <div class="value-icon">
+                  <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h4>Education</h4>
+                <p>Our tools are designed to enhance understanding of global student mobility.</p>
+              </div>
+              <div class="value-card">
+                <div class="value-icon">
+                  <i class="fas fa-users"></i>
+                </div>
+                <h4>Collaboration</h4>
+                <p>We work with institutions and researchers to improve our platform.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="quick-links fade-in delay-1">
+          <h3>Quick Links</h3>
+          <ul>
+            <li>
+              <a href="../map_html/index.html">
+                <i class="fas fa-map-marked-alt"></i>
+                Interactive Map
+              </a>
+            </li>
+            <li>
+              <a href="../phase1.html">
+                <i class="fas fa-table"></i>
+                Explore Student Data
+              </a>
+            </li>
+            <li>
+              <a href="../faq.html">
+                <i class="fas fa-question-circle"></i>
+                Frequently Asked Questions
+              </a>
+            </li>
+            <li>
+              <a href="#team">
+                <i class="fas fa-users"></i>
+                Meet the Team
+              </a>
+            </li>
+            <li>
+              <a href="../contact.html">
+                <i class="fas fa-envelope"></i>
+                Contact
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="intro-links">
-      <h3>Explore More</h3>
-      <ul>
-        <li><a href="map_html/index.html">Launch Interactive Map</a></li>
-        <li><a href="faq.html">Frequently Asked Questions</a></li>
-        <li><a href="#contact">Meet the Team</a></li>
+  </section>
+
+  <!-- Team Section -->
+  <section class="section team-section" id="team">
+    <div class="container">
+      <div class="section-title fade-in">
+        <h2>Project Contributors</h2>
+        <p>The dedicated team behind International Student Trends</p>
+      </div>
+      <div class="team-grid">
+        <div class="team-card fade-in delay-1">
+          <img src="../sponsors/Humber.png" alt="Humber College">
+          <h4>Humber College Developers</h4>
+          <p>A student-led team responsible for building and testing the full application.</p>
+          <p><small>Capstone Project Team</small></p>
+        </div>
+        <div class="team-card fade-in delay-2">
+          <img src="../sponsors/York.png" alt="York University">
+          <h4>York University</h4>
+          <p>Supported this initiative with academic mentorship and data research guidance.</p>
+          <p><small>Academic Sponsor</small></p>
+        </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <!-- Footer -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-col">
+      <h4>About INTLMap</h4>
+      <p>We provide data-driven insights into international student mobility patterns to help institutions and policymakers make informed decisions.</p>
+      
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul class="footer-links">
+        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+        <li><a href="about.html"><i class="fas fa-chevron-right"></i> About</a></li>
+        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Explore Student Data</a></li>
+        <li><a href="map_html/index.html"><i class="fas fa-chevron-right"></i> Interactive Maps</a></li>
+        <li><a href="faq.html"><i class="fas fa-chevron-right"></i> FAQ</a></li>
       </ul>
     </div>
-  </section>
-
-  <section class="team">
-    <h2>Project Contributors</h2>
-    <div class="team-grid">
-      <div class="team-card">
-        <img src="sponsors/Humber.png" alt="Humber Logo">
-        <h4>Humber College Developers</h4>
-        <p>A student-led team responsible for building and testing the full application.</p>
-      </div>
-      <div class="team-card">
-        <img src="sponsors/York.png" alt="York Logo">
-        <h4>York University (Sponsor)</h4>
-        <p>Supported this initiative with academic mentorship.</p>
-      </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul class="footer-links">
+        <li><a href="methodology.html"><i class="fas fa-chevron-right"></i> Methodology</a></li>
+      </ul>
     </div>
-  </section>
+    <div class="footer-col">
+      <h4>Contact</h4>
 
-  <footer>
-    <p>&copy; 2025 International Student Trends | <a href="mailto:support@studenttrends.ca">support@studenttrends.ca</a> | Sponsored by <a href="https://yorku.ca" target="_blank">York University</a></p>
-  </footer>
+      <p><strong>Avinash Chaudhary</strong><br>
+        <i class="fas fa-phone"></i> +1 (437) 299-4839
+      </p>
+      <p><strong>Prabhkanwar Singh</strong><br>
+        <i class="fas fa-phone"></i> +1 (437) 733-7984
+      </p>
+      <p><strong>Hongyu Chu</strong><br>
+        <i class="fas fa-phone"></i> +1 (647) 522-0661
+      </p>
+      <p><strong>Neil Martinez</strong><br>
+        <i class="fas fa-phone"></i> +1 (416) 528-1633
+      </p>
+      <p><strong>Matthew Anene</strong><br>
+        <i class="fas fa-phone"></i> +1 (416) 875-0389
+      </p>
+      <p><strong>Address</strong><br>
+        <i class="fas fa-map-marker-alt"></i> 205 Humber College Blvd., Toronto, Ontario, Canada M9W 5L7
+      </p>
+    </div>
+  </div> <!-- close footer-container -->
+
+  <div class="footer-bottom">
+    <p>
+      &copy; 2025 International Student Trends. All rights reserved.
+      <span>|</span>
+      <a href="#">Privacy Policy</a>
+      <span>|</span>
+      <a href="#">Terms of Service</a>
+      <span>|</span>
+      Sponsored by <a href="https://www.yorku.ca" target="_blank">York University</a>
+    </p>
+  </div>
+</footer>
+
+
+  <script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+    
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    
+    menuBtn.addEventListener('click', function() {
+      navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+      menuBtn.innerHTML = navLinks.style.display === 'flex' ? 
+        '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+    });
+    
+    // Responsive adjustment for mobile menu
+    function handleResize() {
+      if (window.innerWidth > 768) {
+        navLinks.style.display = 'flex';
+        menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+      } else {
+        navLinks.style.display = 'none';
+      }
+    }
+    
+    window.addEventListener('resize', handleResize);
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+          
+          // Close mobile menu if open
+          if (window.innerWidth <= 768 && navLinks.style.display === 'flex') {
+            navLinks.style.display = 'none';
+            menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+          }
+        }
+      });
+    });
+  </script>
 </body>
 </html>

@@ -3,132 +3,862 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="favicon.png" type="image/png">
   <title>FAQ – International Student Trends</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
+    :root {
+      --primary: #2563eb;
+      --primary-light: #3b82f6;
+      --primary-dark: #1d4ed8;
+      --secondary: #06b6d4;
+      --dark: #0f172a;
+      --light: #f8fafc;
+      --gray: #64748b;
+      --light-gray: #e2e8f0;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+    }
+    
+    * {
       margin: 0;
       padding: 0;
-      background: #f9f9f9;
-      color: #333;
+      box-sizing: border-box;
     }
-    header {
-      background-color: #0b2c3f;
-      padding: 60px 20px;
-      color: white;
-      text-align: center;
-    }
-    header h1 {
-      font-size: 36px;
-      margin-bottom: 10px;
-    }
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 40px 20px;
-    }
-    .faq-item {
-      margin-bottom: 30px;
-    }
-    .faq-item h3 {
-      margin-bottom: 10px;
-      color: #007BFF;
-    }
-    .faq-item p {
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
       line-height: 1.6;
-      margin: 0;
+      overflow-x: hidden;
     }
+    
+    /* Smooth scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    /* Navigation */
     nav {
-      background: white;
-      padding: 14px 40px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      box-shadow: var(--shadow-sm);
       position: sticky;
       top: 0;
       z-index: 1000;
+      transition: var(--transition);
     }
+    
+    nav.scrolled {
+      padding: 0.75rem 2rem;
+      box-shadow: var(--shadow-md);
+    }
+    
     .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
       font-weight: 700;
-      font-size: 20px;
-      color: #00c3e3;
+      font-size: 1.25rem;
+      color: var(--primary);
+      text-decoration: none;
+      transition: var(--transition);
     }
-    .logo span {
-      color: #333;
+    
+    .logo:hover {
+      opacity: 0.9;
     }
+    
+    .logo img {
+      height: 2.5rem;
+      transition: var(--transition);
+    }
+    
+    nav.scrolled .logo img {
+      height: 2rem;
+    }
+    
     .nav-links {
       display: flex;
-      gap: 24px;
+      gap: 1.5rem;
       align-items: center;
     }
+    
     .nav-links a {
-      color: #333;
+      color: var(--dark);
       text-decoration: none;
       font-weight: 500;
-      transition: color 0.3s;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      position: relative;
+      padding: 0.5rem 0;
     }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary);
+      transition: var(--transition);
+    }
+    
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+    
     .nav-links a:hover {
-      color: #00c3e3;
+      color: var(--primary);
     }
-footer {
-      background: #0b2c3f;
-      color: #ccc;
-      padding: 40px 20px;
+    
+    .nav-links .active {
+      color: var(--primary);
+    }
+    
+    .nav-links .active::after {
+      width: 100%;
+    }
+    
+    .btn-header {
+      background-color: var(--primary);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .btn-header:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--dark);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    /* Page Header */
+    .page-header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      padding: 6rem 2rem 4rem;
       text-align: center;
-      font-size: 14px;
+      position: relative;
+      overflow: hidden;
     }
-    footer a {
-      color: #ccc;
+    
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==');
+      opacity: 0.3;
+    }
+    
+    .page-header-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .page-header h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    
+    .page-header p {
+      font-size: 1.25rem;
+      opacity: 0.9;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    /* FAQ Section */
+    .section {
+      padding: 5rem 2rem;
+      position: relative;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .faq-item {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      border: 1px solid var(--light-gray);
+      cursor: pointer;
+      overflow: hidden;
+    }
+    
+    .faq-item.active {
+      border-color: var(--primary-light);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+    
+    .faq-question i {
+      transition: var(--transition);
+    }
+    
+    .faq-item.active .faq-question i {
+      transform: rotate(180deg);
+    }
+    
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+      color: var(--gray);
+      line-height: 1.7;
+    }
+    
+    .faq-item.active .faq-answer {
+      max-height: 500px;
+      padding-top: 1rem;
+    }
+    
+    /* Search Bar */
+    .search-container {
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      position: relative;
+    }
+    
+    .search-container i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray);
+    }
+    
+    .search-input {
+      width: 100%;
+      padding: 0.875rem 1rem 0.875rem 3rem;
+      border: 1px solid var(--light-gray);
+      border-radius: var(--radius-md);
+      font-family: inherit;
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+    
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    
+    /* Category Filters */
+    .category-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      margin-bottom: 3rem;
+    }
+    
+    .category-btn {
+      padding: 0.5rem 1rem;
+      background: white;
+      border: 1px solid var(--light-gray);
+      border-radius: var(--radius-md);
+      font-family: inherit;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .category-btn:hover, .category-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    
+    /* No Results */
+    .no-results {
+      text-align: center;
+      padding: 3rem;
+      color: var(--gray);
+      display: none;
+    }
+    
+    /* Footer */
+    footer {
+      background-color: var(--dark);
+      color: rgba(255, 255, 255, 0.8);
+      padding: 4rem 2rem 2rem;
+    }
+    
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .footer-col h4 {
+      color: white;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.75rem;
+    }
+    
+    .footer-col h4::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+    }
+    
+    .footer-col p {
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+    
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .footer-links a:hover {
+      color: white;
+      transform: translateX(5px);
+    }
+    
+    .footer-links a i {
+      font-size: 0.8rem;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: var(--transition);
+    }
+    
+    .social-links a:hover {
+      background-color: var(--primary);
+      transform: translateY(-3px);
+    }
+    .footer-bottom {
+      text-align: center;
+      padding-top: 2rem;
+      margin-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.6);
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .footer-bottom a {
+      color: var(--primary);
       text-decoration: none;
     }
-    footer a:hover {
-      color: #00c3e3;
+
+    .footer-bottom a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.8s ease forwards;
+    }
+    
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .page-header h1 {
+        font-size: 2.25rem;
+      }
+      
+      .page-header p {
+        font-size: 1.1rem;
+      }
+      
+      .section {
+        padding: 3rem 1.5rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      nav {
+        padding: 1rem;
+      }
+      
+      .page-header {
+        padding: 4rem 1rem 3rem;
+      }
+      
+      .page-header h1 {
+        font-size: 2rem;
+      }
+      
+      .section {
+        padding: 2rem 1rem;
+      }
     }
   </style>
 </head>
 <body>
-  <nav>
-    <div class="logo">INTL<span>Map</span></div>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact Us</a>
+  <!-- Navigation -->
+  <nav id="navbar">
+    <a href="../index.html" class="logo">
+      <img src="../images/Logo.png" alt="INTLMap Logo" style="height: 60px; margin-right: 10px;">
+    </a>
+    <span style="font-weight: 600; font-size: 1.5rem; color: var(--dark); white-space: nowrap;">
+  Data Visualization of International Student Distribution in Canada
+</span>
+    <button class="mobile-menu-btn" id="menuBtn">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+      <a href="faq.html" class="active">FAQ</a>
+      <a href="../contact.html">Contact</a>
     </div>
   </nav>
 
-  <header>
-    <h1>Frequently Asked Questions</h1>
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="page-header-content fade-in">
+      <h1>Frequently Asked Questions</h1>
+      <p>Find answers to common questions about our platform and data</p>
+    </div>
   </header>
 
-  <div class="container">
-    <div class="faq-item">
-      <h3>Who is this platform for?</h3>
-      <p>This platform is designed for educators, students, policy analysts, researchers, and anyone interested in understanding the landscape of international education in Canada.</p>
+  <!-- FAQ Section -->
+  <section class="section">
+    <div class="container">
+      <div class="search-container fade-in delay-1">
+        <i class="fas fa-search"></i>
+        <input type="text" class="search-input" placeholder="Search FAQs..." id="searchInput">
+      </div>
+      
+      <div class="category-filters fade-in delay-1">
+        <button class="category-btn active" data-category="all">All</button>
+        <button class="category-btn" data-category="general">General</button>
+        <button class="category-btn" data-category="data">Data</button>
+        <button class="category-btn" data-category="technical">Technical</button>
+        <button class="category-btn" data-category="usage">Usage</button>
+      </div>
+      
+      <div class="faq-container">
+        <!-- General Questions -->
+        <div class="faq-item fade-in delay-1" data-categories="general">
+          <div class="faq-question">
+            <span>Who is this platform for?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>This platform is designed for educators, students, policy analysts, researchers, and anyone interested in understanding the landscape of international education in Canada. Whether you're an academic looking for research data, a student considering study abroad options, or a policymaker analyzing trends, our tools provide valuable insights.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item fade-in delay-1" data-categories="general">
+          <div class="faq-question">
+            <span>Is there a cost to use this platform?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>No, the platform is completely free to use! We believe in open access to educational data. The dashboard is open-source and available for public use. Our sponsors help maintain the platform so users never have to pay.</p>
+          </div>
+        </div>
+        
+        <!-- Data Questions -->
+        <div class="faq-item fade-in delay-2" data-categories="data">
+          <div class="faq-question">
+            <span>Where does the data come from?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>We source our data from publicly available government databases (like Statistics Canada) and contributions from our sponsors such as York University and Humber College. All data is carefully vetted for accuracy before being included in our platform.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item fade-in delay-2" data-categories="data">
+          <div class="faq-question">
+            <span>How often is the data updated?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Our data is updated annually with the latest available statistics from government sources. Some datasets may be updated more frequently when new information becomes available.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item fade-in delay-2" data-categories="data">
+          <div class="faq-question">
+            <span>What time periods does the data cover?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Our historical data goes back to 2009 for most metrics, with more recent years having more detailed breakdowns. We're continuously working to add older historical data where available. The platform currently tracks trends up to the most recent available Statistics Canada data.</p>
+          </div>
+        </div>
+        
+        <!-- Technical Questions -->
+        <div class="faq-item fade-in delay-3" data-categories="technical">
+          <div class="faq-question">
+            <span>What technologies power this platform?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>The platform is built with modern web technologies including HTML5, CSS3, JavaScript (with Vue.js framework), and Python for data processing. Our visualizations use D3.js and Chart.js, while the interactive maps are powered by Leaflet. The backend uses PostgreSQL for data storage. Graphs were designed in R. Maps were developed in QGIS.</p>
+          </div>
+        </div>
+               
+        <!-- Usage Questions -->
+        <div class="faq-item fade-in delay-1" data-categories="usage">
+          <div class="faq-question">
+            <span>Can I export the data or charts?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Absolutely. Users can download filtered datasets as CSV/Excel files for use in presentations and reports. Simply use the export buttons available on each visualization. Please remember to cite the source when using our data in publications.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item fade-in delay-2" data-categories="usage">
+          <div class="faq-question">
+            <span>How can I cite data from this platform?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>We recommend the following citation format: "International Student Trends Dashboard [Year of data]. Retrieved from [URL] on [Date of access]." Each dataset page provides specific citation suggestions. For academic publications, please include the specific dataset version if available.</p>
+          </div>
+        </div>
+               
+        <div class="faq-item fade-in delay-1" data-categories="usage">
+          <div class="faq-question">
+            <span>Can I request specific data analysis?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>While we can't fulfill all individual requests, we welcome suggestions for new datasets or analyses that would benefit the community. Please use our Contact form to submit your ideas. For custom research projects, our team at York University may be available for consulting (fees may apply).</p>
+          </div>
+        </div>
+        
+        <!-- Additional Suggested Questions -->
+        <div class="faq-item fade-in delay-2" data-categories="general">
+          <div class="faq-question">
+            <span>Who maintains this platform?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>The platform is maintained by a team of developers and researchers from Humber College, with support from York University. Our interdisciplinary team includes data scientists, web developers, and education researchers working together to keep the platform updated and improve its features.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item fade-in delay-3" data-categories="technical">
+          <div class="faq-question">
+            <span>Is my data private when I use this platform?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>We don't collect any personally identifiable information about our users. The platform only uses aggregate, anonymized educational data. Any usage statistics we collect are completely anonymous and used only to improve the service.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item fade-in delay-1" data-categories="data">
+          <div class="faq-question">
+            <span>Are there limitations to the data?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>While we strive for comprehensive coverage, some limitations include: data may not include all institutions, some historical data has gaps, some institutions may have missing geographic data, and certain demographic breakdowns may be limited to protect privacy.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item fade-in delay-2" data-categories="usage">
+          <div class="faq-question">
+            <span>Can I contribute data to the platform?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>We welcome data contributions from qualified institutions and researchers. All contributed data goes through a verification process before being added to the platform. Please contact our data team to discuss potential contributions and review our data submission guidelines.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="no-results" id="noResults">
+        <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+        <h3>No matching FAQs found</h3>
+        <p>Try adjusting your search or filter criteria</p>
+      </div>
     </div>
+  </section>
 
-    <div class="faq-item">
-      <h3>Where does the data come from?</h3>
-      <p>
-        We source our data from publicly available databases from Statistics Canada, which falls under the Statistics Canada Open Licence.
-        <a href="https://www.statcan.gc.ca/en/reference/licence-faq" target="_blank">Learn more here</a>
+<!-- Footer -->
+  <!-- Footer -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-col">
+      <h4>About INTLMap</h4>
+      <p>We provide data-driven insights into international student mobility patterns to help institutions and policymakers make informed decisions.</p>
+      
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul class="footer-links">
+        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+        <li><a href="about.html"><i class="fas fa-chevron-right"></i> About</a></li>
+        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Explore Student Data</a></li>
+        <li><a href="map_html/index.html"><i class="fas fa-chevron-right"></i> Interactive Maps</a></li>
+        <li><a href="faq.html"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul class="footer-links">
+        <li><a href="methodology.html"><i class="fas fa-chevron-right"></i> Methodology</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+
+      <p><strong>Avinash Chaudhary</strong><br>
+        <i class="fas fa-phone"></i> +1 (437) 299-4839
+      </p>
+      <p><strong>Prabhkanwar Singh</strong><br>
+        <i class="fas fa-phone"></i> +1 (437) 733-7984
+      </p>
+      <p><strong>Hongyu Chu</strong><br>
+        <i class="fas fa-phone"></i> +1 (647) 522-0661
+      </p>
+      <p><strong>Neil Martinez</strong><br>
+        <i class="fas fa-phone"></i> +1 (416) 528-1633
+      </p>
+      <p><strong>Matthew Anene</strong><br>
+        <i class="fas fa-phone"></i> +1 (416) 875-0389
+      </p>
+      <p><strong>Address</strong><br>
+        <i class="fas fa-map-marker-alt"></i> 205 Humber College Blvd., Toronto, Ontario, Canada M9W 5L7
       </p>
     </div>
+  </div> <!-- close footer-container -->
 
-    <div class="faq-item">
-      <h3>Is the platform free to use?</h3>
-      <p>Yes! The dashboard is completely open-source and free for public use.</p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Can I export the data or charts?</h3>
-      <p>Absolutely. Users can download filtered datasets as CSV or export chart images for use in presentations and reports.</p>
-    </div>
+  <div class="footer-bottom">
+    <p>
+      &copy; 2025 International Student Trends. All rights reserved.
+      <span>|</span>
+      <a href="#">Privacy Policy</a>
+      <span>|</span>
+      <a href="#">Terms of Service</a>
+      <span>|</span>
+      Sponsored by <a href="https://www.yorku.ca" target="_blank">York University</a>
+    </p>
   </div>
+</footer>
 
-    <footer>
-    <p>&copy; 2025 International Student Trends | <a href="mailto:support@studenttrends.ca">support@studenttrends.ca</a> | Sponsored by <a href="https://yorku.ca" target="_blank">York University</a></p>
-  </footer>
+
+
+  <script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+    
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    
+    menuBtn.addEventListener('click', function() {
+      navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+      menuBtn.innerHTML = navLinks.style.display === 'flex' ? 
+        '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+    });
+    
+    // Responsive adjustment for mobile menu
+    function handleResize() {
+      if (window.innerWidth > 768) {
+        navLinks.style.display = 'flex';
+        menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+      } else {
+        navLinks.style.display = 'none';
+      }
+    }
+    
+    window.addEventListener('resize', handleResize);
+    
+    // FAQ Accordion Functionality
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      
+      question.addEventListener('click', () => {
+        // Close all other items
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item && otherItem.classList.contains('active')) {
+            otherItem.classList.remove('active');
+          }
+        });
+        
+        // Toggle current item
+        item.classList.toggle('active');
+      });
+    });
+    
+    // FAQ Search Functionality
+    const searchInput = document.getElementById('searchInput');
+    const noResults = document.getElementById('noResults');
+    
+    searchInput.addEventListener('input', function() {
+      const searchTerm = this.value.toLowerCase();
+      let hasResults = false;
+      
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question span').textContent.toLowerCase();
+        const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+        const isVisible = item.style.display !== 'none';
+        
+        if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+          item.style.display = '';
+          hasResults = true;
+        } else if (isVisible) {
+          item.style.display = 'none';
+        }
+      });
+      
+      noResults.style.display = hasResults ? 'none' : 'block';
+    });
+    
+    // FAQ Category Filtering
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    
+    categoryBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        // Update active button
+        categoryBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        
+        const category = this.dataset.category;
+        let hasResults = false;
+        
+        faqItems.forEach(item => {
+          const itemCategories = item.dataset.categories.split(' ');
+          const matchesSearch = searchInput.value === '' || 
+            item.querySelector('.faq-question span').textContent.toLowerCase().includes(searchInput.value.toLowerCase()) ||
+            item.querySelector('.faq-answer').textContent.toLowerCase().includes(searchInput.value.toLowerCase());
+          
+          if (category === 'all' || itemCategories.includes(category)) {
+            item.style.display = matchesSearch ? '' : 'none';
+            if (matchesSearch) hasResults = true;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+        
+        noResults.style.display = hasResults ? 'none' : 'block';
+      });
+    });
+  </script>
 </body>
 </html>

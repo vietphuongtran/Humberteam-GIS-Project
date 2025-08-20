@@ -11,41 +11,43 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // === PHASE 1: Toronto Table ===
-  if (document.getElementById("tabulator-table")) {
-    Papa.parse("data/students.csv", {
-      download: true,
-      header: true,
-      complete: function (results) {
-        const data = results.data;
-        window.originalPhase1Data = data;
+// === PHASE 1: Toronto Table ===
+if (document.getElementById("tabulator-table")) {
+  Papa.parse("data/students.csv", {
+    download: true,
+    header: true,
+    complete: function (results) {
+      const data = results.data;
+      window.originalPhase1Data = data;
 
-        table = new Tabulator("#tabulator-table", {
-          data,
-          layout: "fitColumns",
-          pagination: "local",
-          paginationSize: 10,
-          columns: [
-            { title: "Year", field: "REF_DATE" },
-            { title: "Institution", field: "GEO" },
-            { title: "Field of Study", field: "Field of study" },
-            { title: "Student Type", field: "Status of student in Canada" },
-            { title: "Gender", field: "Gender" },
-            { title: "Students", field: "VALUE", sorter: "number", hozAlign: "right" }
-          ]
-        });
+      const table = new Tabulator("#tabulator-table", {
+        data,
+        layout: "fitColumns",
+        pagination: "local",
+        paginationSize: 10,
+        columns: [
+          { title: "Year", field: "REF_DATE" },
+          { title: "Institution", field: "GEO" },
+          { title: "Field of Study", field: "Field of study" },
+          { title: "Student Type", field: "Status of student in Canada" },
+          { title: "Gender", field: "Gender" },
+          { title: "Students", field: "VALUE", sorter: "number", hozAlign: "right" }
+        ]
+      });
 
-        populateDropdown("yearFilter", [...new Set(data.map(d => d["REF_DATE"]))]);
-        populateDropdown("institutionFilter", [...new Set(data.map(d => d["GEO"]))]);
-        populateDropdown("genderFilter", [...new Set(data.map(d => d["Gender"]))]);
+      window.table = table;
 
-        document.getElementById("searchInput").addEventListener("input", filterPhase1Table);
-        ["yearFilter", "institutionFilter", "genderFilter"].forEach(id => {
-          document.getElementById(id)?.addEventListener("change", filterPhase1Table);
-        });
-      }
-    });
-  }
+      populateDropdown("yearFilter", [...new Set(data.map(d => d["REF_DATE"]))]);
+      populateDropdown("institutionFilter", [...new Set(data.map(d => d["GEO"]))]);
+      populateDropdown("genderFilter", [...new Set(data.map(d => d["Gender"]))]);
+
+      document.getElementById("searchInput").addEventListener("input", filterPhase1Table);
+      ["yearFilter", "institutionFilter", "genderFilter"].forEach(id => {
+        document.getElementById(id)?.addEventListener("change", filterPhase1Table);
+      });
+    }
+  });
+}
 
   // === ONTARIO TABLE ===
   if (document.getElementById("ontario-table")) {

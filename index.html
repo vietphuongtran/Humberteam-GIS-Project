@@ -3,211 +3,908 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="favicon.png" type="image/png">
   <title>International Student Trends</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: #0b2c3f;
-      color: white;
+    :root {
+      --primary: #00c3e3;
+      --primary-dark: #0099b6;
+      --secondary: #007bff;
+      --dark: #0b2c3f;
+      --darker: #082230;
+      --light: #f8fafc;
+      --gray: #64748b;
+      --light-gray: #e2e8f0;
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+      --radius-sm: 4px;
+      --radius-md: 6px;
+      --radius-lg: 8px;
     }
-
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--dark);
+      color: white;
+      line-height: 1.6;
+    }
+    /* Navigation */
     nav {
-      background: white;
-      padding: 14px 40px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      box-shadow: var(--shadow-sm);
       position: sticky;
       top: 0;
       z-index: 1000;
     }
-
     .logo {
       font-weight: 700;
-      font-size: 20px;
-      color: #00c3e3;
+      font-size: 1.5rem;
+      color: var(--primary);
+      text-decoration: none;
     }
-
     .logo span {
-      color: #333;
+      color: var(--dark);
     }
-
     .nav-links {
       display: flex;
-      gap: 24px;
+      gap: 1.5rem;
       align-items: center;
     }
-
     .nav-links a {
-      color: #333;
+      color: var(--dark);
       text-decoration: none;
       font-weight: 500;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      position: relative;
+      padding: 0.5rem 0;
     }
-
+    .modal-item a {
+      color: black !important;
+      text-decoration: none;
+      font-weight: 500;
+      display: block;
+    }
+    #graphModal h2 {
+      color: black !important;
+    }
+    #dataModal h2 {
+      color: black !important;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary);
+      transition: var(--transition);
+    }
+    .nav-links a:hover::after {
+      width: 100%;
+    }
     .nav-links a:hover {
-      color: #00c3e3;
+      color: var(--primary);
     }
-
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--dark);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    /* Hero Section */
     .hero {
       display: flex;
-      flex-wrap: wrap;
-      height: 100vh;
-      max-height: 700px;
+      min-height: 100vh;
+      max-height: 800px;
+      position: relative;
+      overflow: hidden;
     }
-
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(0, 195, 227, 0.8) 0%, rgba(0, 123, 255, 0.8) 100%);
+      z-index: 1;
+    }
     .hero-text {
       flex: 1;
-      padding: 80px 60px;
+      padding: 2rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      min-width: 300px;
+      position: relative;
+      z-index: 2;
     }
-
     .hero-text h1 {
-      font-size: 42px;
+      font-size: 3rem;
       font-weight: 700;
-      margin-bottom: 20px;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
     }
-
     .hero-text p {
-      font-size: 18px;
-      color: #cfd8dc;
-      max-width: 500px;
+      font-size: 1.25rem;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 600px;
+      margin-bottom: 2rem;
     }
-
-    .actions {
-      margin-top: 30px;
-      position: relative;
-    }
-
-    .dropdown {
-      position: relative;
-      display: inline-block;
-    }
-
-    .dropdown-btn {
-      background-color: #00c3e3;
-      color: #003d56;
-      padding: 14px 24px;
-      font-size: 16px;
-      font-weight: 600;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: white;
-      min-width: 280px;
-      max-height: 300px;
-      overflow-y: auto;
-      border-radius: 6px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      z-index: 100;
-    }
-
-    .dropdown-content a {
-      color: #003d56;
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-      font-weight: 500;
-      border-bottom: 1px solid #eee;
-    }
-
-    .dropdown-content a:hover {
-      background-color: #f1f1f1;
-    }
-
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-
-    .btn {
-      padding: 14px 24px;
-      font-size: 16px;
-      font-weight: 600;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.3s ease;
-    }
-
-    .btn-secondary {
-      margin-left: 12px;
-      background-color: #007bff;
-      color: white;
-    }
-
     .hero video {
-      flex: 1;
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      min-width: 400px;
+      z-index: 0;
+    }
+    .actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 0.875rem 1.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-primary {
+      background-color: white;
+      color: var(--primary);
+      box-shadow: var(--shadow-md);
+    }
+    .btn-primary:hover {
+      background-color: rgba(255, 255, 255, 0.9);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+    .btn-secondary {
+      background-color: transparent;
+      color: white;
+      border: 2px solid white;
+    }
+    .btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+    /* Modal Dropdown */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background-color: white;
+      padding: 2rem;
+      border-radius: var(--radius-lg);
+      width: 90%;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+    .close-modal {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--gray);
+    }
+    .modal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .modal-item {
+      padding: 1rem;
+      background-color: var(--light-gray);
+      border-radius: var(--radius-sm);
+      text-align: center;
+      transition: var(--transition);
+    }
+    .modal-item:hover {
+      background-color: var(--primary);
+      color: white;
+      transform: translateY(-2px);
+    }
+    .modal-item a {
+      color: inherit;
+      text-decoration: none;
+      font-weight: 500;
+      display: block;
+    }
+    /* Features Section */
+    .section {
+      padding: 5rem 2rem;
+      position: relative;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .section-title h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 1rem;
+    }
+    .section-title p {
+      color: var(--gray);
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 1.125rem;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .feature-card {
+      background: var(--darker);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+    .feature-icon {
+      width: 3.5rem;
+      height: 3.5rem;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      color: white;
+      font-size: 1.5rem;
+    }
+    .feature-card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: white;
+    }
+    .feature-card p {
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+    }
+    /* Stats Section */
+    .stats-section {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      padding: 4rem 2rem;
+    }
+    .stats-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 1.5rem;
+    }
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .stat-label {
+      font-size: 1.125rem;
+      opacity: 0.9;
+    }
+    /* Sponsors Section */
+    .sponsors {
+      background-color: var(--darker);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .sponsor-logos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+    .sponsor-logos img {
+      height: 60px;
+      width: auto;
+      object-fit: contain;
+      filter: grayscale(100%) brightness(1.5);
+      opacity: 0.8;
+      transition: var(--transition);
+    }
+    .sponsor-logos a:hover img {
+      filter: grayscale(0) brightness(1);
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    @media (max-width: 768px) {
+      .sponsor-logos {
+        gap: 1.5rem;
+      }
+      .sponsor-logos img {
+        height: 40px;
+      }
     }
 
-    footer {
-      background: #0b2c3f;
-      color: #ccc;
-      padding: 40px 20px;
+    /* 🔥 Full-Width Contact & Team Section */
+    .contact-section {
+      padding: 4rem 2rem;
+      background-color: var(--darker);
+      color: white;
       text-align: center;
+    }
+    .contact-section h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: white;
+      border-bottom: 2px solid var(--primary);
+      display: inline-block;
+      padding-bottom: 0.5rem;
+    }
+    .contact-section h4 {
+      margin-top: 1rem;
+      font-size: 1.5rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+    .team-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* force 5 columns */
+  gap: 1.8rem;
+  max-width: 1300px; /* increase to allow space for 5 cards */
+  margin: 2.5rem auto 0;
+  padding: 0 1rem;
+    }
+    .team-card {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1.2rem;
+      border-radius: var(--radius-md);
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .team-card:hover {
+      background-color: rgba(0, 195, 227, 0.08);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .team-card img {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 0.8rem;
+      border: 2px solid var(--primary);
+      box-shadow: 0 0 5px rgba(0, 195, 227, 0.5);
+    }
+    .team-card h5 {
+      color: white;
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+    .team-card p {
+      color: var(--gray);
+      font-size: 0.9rem;
+      margin-bottom: 0.6rem;
+    }
+    .team-card a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+    .team-card a:hover {
+      text-decoration: underline;
+      color: var(--primary-dark);
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--darker);
+      color: rgba(255, 255, 255, 0.8);
+      padding: 4rem 2rem 2rem;
+    }
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-col h4 {
+      color: white;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.75rem;
+    }
+    .footer-col h4::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+    }
+    .footer-col p {
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+      color: var(--gray);
+    }
+    .footer-links {
+      list-style: none;
+    }
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .footer-links a:hover {
+      color: white;
+      transform: translateX(5px);
+    }
+    .footer-links a i {
+      font-size: 0.8rem;
+    }
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: var(--transition);
+    }
+    .social-links a:hover {
+      background-color: var(--primary);
+      transform: translateY(-3px);
+    }
+    .footer-bottom {
+      text-align: center;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .hero-text {
+        text-align: center;
+        align-items: center;
+      }
+      .hero-text h1 {
+        font-size: 2.5rem;
+      }
+      .actions {
+        justify-content: center;
+      }
+    }
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .hero-text h1 {
+        font-size: 2rem;
+      }
+      .section {
+        padding: 3rem 1.5rem;
+      }
+      .section-title h2 {
+        font-size: 2rem;
+      }
+      .team-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+    }
+    @media (max-width: 480px) {
+      nav {
+        padding: 1rem;
+      }
+      .hero-text {
+        padding: 1rem;
+      }
+      .hero-text h1 {
+        font-size: 1.75rem;
+      }
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .modal-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Navigation -->
+ <nav id="navbar">
+  <div style="display: flex; align-items: center; gap: 20px;">
+    <a href="index.html" class="logo">
+      <img src="images/Logo.png" alt="INTLMap Logo" style="height: 60px;">
+    </a>
+    <span style="font-weight: 600; font-size: 1.5rem; color: var(--dark); white-space: nowrap;">
+  Data Visualization of International Student Distribution in Canada
+</span>
+  </div>
 
-<nav>
-  <div class="logo">INTL<span>Map</span></div>
-  <div class="nav-links">
+  <button class="mobile-menu-btn" id="menuBtn">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div class="nav-links" id="navLinks">
     <a href="about.html">About</a>
     <a href="faq.html">FAQ</a>
-    <a href="contact.html">Contact Us</a>
+    <a href="contact.html">Contact</a>
   </div>
 </nav>
 
-<header>
-  <div class="hero">
-    <div class="hero-text">
-      <h1>International Student Trends</h1>
-      <p>A free and interactive platform for global student data visualization.</p>
-      <div class="actions">
-        <div class="dropdown">
-          <button class="dropdown-btn">📊 Explore Student Data</button>
-          <div class="dropdown-content">
-            <a href="phase1.html">Toronto (Phase 1)</a>
-            <a href="ontario.html">Ontario</a>
-            <a href="alberta.html">Alberta</a>
-            <a href="BritishColumbia.html">British Columbia</a>
-            <a href="manitoba.html">Manitoba</a>
-            <a href="newbrunswick.html">New Brunswick</a>
-            <a href="novascotia.html">Nova Scotia</a>
-            <a href="PrinceEdward.html">Prince Edward Island</a>
-            <a href="quebec.html">Quebec</a>
-            <a href="saskatchewan.html">Saskatchewan</a>
-            <a href="yukon.html">Yukon</a>
-          </div>
-        </div>
-        <a href="map_html/index.html" class="btn btn-secondary">🗺️ Explore Interactive Maps</a>
-      </div>
-    </div>
-    <video autoplay muted loop>
+
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <video autoplay muted loop playsinline>
       <source src="videos/intro.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
+    <div class="hero-text">
+      <h1 class="fade-in">Visualizing International Student Trends</h1>
+      <p>A free and interactive platform for visualizing student enrollment trends across Canada's postsecondary institutions.</p>
+      <div class="actions">
+        <button class="btn btn-primary" id="openModal">
+          Explore Student Data
+        </button>
+        <button class="btn btn-secondary" id="openGraphModal">
+          Graphs
+        </button>
+        <a href="map_html/index.html" class="btn btn-secondary">
+          Interactive Maps
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="section">
+    <div class="section-title">
+      <h2 style="color: #0b2c3f;">Powerful Features</h2>
+      <p>Our platform provides comprehensive tools to analyze Canadian and international student trends</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-globe-americas"></i>
+        </div>
+        <h3>Nationwide Coverage</h3>
+        <p>Explore Canadian and international student data across 10 Canadian provinces and territories, with detailed insights by region, institution, and program type.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-map-marked-alt"></i>
+        </div>
+        <h3>Interactive Maps</h3>
+        <p>Visualize student distribution with dynamic maps that highlight trends and patterns.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <h3>Trend Analysis</h3>
+        <p>Track changes over time with our year-by-year comparison tools.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sponsors Section -->
+  <section class="section sponsors">
+    <div class="section-title fade-in">
+      <h2>Our Sponsors</h2>
+      <p>In collaboration with Humber College and with generous sponsorship from York University. <br> Click on the logos below to visit their official websites.</p>
+    </div>
+    <div class="sponsor-logos fade-in delay-1">
+      <a href="https://humber.ca" target="_blank">
+        <img src="sponsors/Humber.png" alt="Humber College">
+      </a>
+      <a href="https://yorku.ca" target="_blank">
+        <img src="sponsors/York.png" alt="York University">
+      </a>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats-section">
+    <div class="stats-container">
+      <div class="stat-item">
+        <div class="stat-number" id="studentsCount">1M+</div>
+        <div class="stat-label">International Students</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" id="provinceCount">10</div>
+        <div class="stat-label">Provinces/Territories Covered</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" id="institutionsCount">450+</div>
+        <div class="stat-label">Institutions</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" id="yearsData">6</div>
+        <div class="stat-label">Years of Data</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🔥 Full-Width Contact & Team Section -->
+  <section class="contact-section">
+    <h2>Contact</h2>
+    <h4>Meet the Co-Minds Team</h4>
+    <div class="team-grid">
+      <div class="team-card">
+        <img src="images/team/avinash.png" alt="Avinash Chaudhary">
+        <h5>Avinash Chaudhary</h5>
+        <p><i class="fas fa-phone"></i> +1 (437) 299-4839</p>
+        <a href="https://www.linkedin.com/in/avinashchaudhary849/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+      </div>
+       <div class="team-card">
+        <img src="images/team/prabh.jpg" alt="Prabhkanwar Singh">
+        <h5>Prabhkanwar Singh</h5>
+        <p><i class="fas fa-phone"></i> +1 (437) 733-7984</p>
+        <a href="https://www.linkedin.com/in/prabhkanwarsingh/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+      </div>
+      <div class="team-card">
+        <img src="images/team/hongyu.jpg" alt="Hongyu Chu">
+        <h5>Hongyu Chu</h5>
+        <p><i class="fas fa-phone"></i> +1 (647) 522-0661</p>
+        <a href="https://www.linkedin.com/in/hongyu-chu-07047a2a4/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+      </div>
+      <div class="team-card">
+        <img src="images/team/neil.jpg" alt="Neil Martinez">
+        <h5>Neil Martinez</h5>
+        <p><i class="fas fa-phone"></i> +1 (416) 528-1633</p>
+        <a href="https://www.linkedin.com/in/neilmmus/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+      </div>
+       <div class="team-card">
+        <img src="images/team/matthew.jpg" alt="Matthew Anene">
+        <h5>Matthew Anene</h5>
+        <p><i class="fas fa-phone"></i> +1 (416) 875-0389</p>
+        <a href="https://www.linkedin.com/in/matthew-anene-8b0ab434a/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+      </div>
+     
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>About INTLMap</h4>
+        <p>We provide data-driven insights into international student mobility patterns to help institutions and policymakers make informed decisions.</p>
+        
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+          <li><a href="about.html"><i class="fas fa-chevron-right"></i> About</a></li>
+          <li><a href="index.html"><i class="fas fa-chevron-right"></i> Explore Student Data</a></li>
+          <li><a href="map_html/index.html"><i class="fas fa-chevron-right"></i> Interactive Maps</a></li>
+          <li><a href="faq.html"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul class="footer-links">
+          <li><a href="methodology.html"><i class="fas fa-chevron-right"></i> Methodology</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 International Student Trends. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | Sponsored by <a href="https://yorku.ca" target="_blank">York University</a></p>
+    </div>
+  </footer>
+
+  <!-- Modal Dropdown -->
+  <div class="modal" id="dataModal">
+    <div class="modal-content">
+      <span class="close-modal" id="closeModal">&times;</span>
+      <h2>Select a Region to Explore</h2>
+      <div class="modal-grid">
+        <div class="modal-item"><a href="phase1.html">Toronto</a></div>
+        <div class="modal-item"><a href="ontario.html">Ontario</a></div>
+        <div class="modal-item"><a href="alberta.html">Alberta</a></div>
+        <div class="modal-item"><a href="BritishColumbia.html">British Columbia</a></div>
+        <div class="modal-item"><a href="manitoba.html">Manitoba</a></div>
+        <div class="modal-item"><a href="newbrunswick.html">New Brunswick</a></div>
+        <div class="modal-item"><a href="novascotia.html">Nova Scotia</a></div>
+        <div class="modal-item"><a href="PrinceEdward.html">Prince Edward Island</a></div>
+        <div class="modal-item"><a href="quebec.html">Quebec</a></div>
+        <div class="modal-item"><a href="saskatchewan.html">Saskatchewan</a></div>
+        <div class="modal-item"><a href="yukon.html">Yukon</a></div>
+      </div>
+    </div>
   </div>
-</header>
 
-<footer>
-  <p>© 2025 International Student Trends Project. All rights reserved.</p>
-</footer>
+  <!-- Graph Modal -->
+  <div class="modal" id="graphModal">
+    <div class="modal-content">
+      <span class="close-modal" id="closeGraphModal">&times;</span>
+      <h2>Select a Graph to View</h2>
+      <div class="modal-grid">
+        <div class="modal-item"><a href="graph_html/credential-type-enrollments-by-year.html">Credential Type</a></div>
+        <div class="modal-item"><a href="graph_html/full-time-vs-part-time-student-enrollments-by-year.html">Full-Time vs Part-Time</a></div>
+        <div class="modal-item"><a href="graph_html/gender-enrollments-by-year.html">Gender Enrollments</a></div>
+        <div class="modal-item"><a href="graph_html/institution-type-enrollments-by-year.html">Institution Type</a></div>
+        <div class="modal-item"><a href="graph_html/international-student-ratio-over-time.html">International Ratio</a></div>
+        <div class="modal-item"><a href="graph_html/percentage-of-women-in-total-enrollments-by-year.html">Women in Enrollments</a></div>
+        <div class="modal-item"><a href="graph_html/program-type-enrollments-by-year.html">Program Type</a></div>
+        <div class="modal-item"><a href="graph_html/status-of-student-in-canada-enrollments-by-year.html">Student Status</a></div>
+        <div class="modal-item"><a href="graph_html/top-5-provinces-territories-by-total-enrollment.html">Top 5 Provinces</a></div>
+        <div class="modal-item"><a href="graph_html/top-10-fields-of-study-enrollments-by-year.html">Top 10 Fields</a></div>
+        <div class="modal-item"><a href="graph_html/top-100-fields-of-study-enrollments-by-year.html">Top 100 Fields</a></div>
+        <div class="modal-item"><a href="graph_html/top-500-fields-of-study-enrollments-by-year.html">Top 500 Fields</a></div>
+        <div class="modal-item"><a href="graph_html/total-enrollments-by-year.html">Total Enrollments</a></div>
+      </div>
+    </div>
+  </div>
 
+  <!-- Scripts -->
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', function() {
+      navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+      menuBtn.innerHTML = navLinks.style.display === 'flex' ? 
+        '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+    });
+
+    // Modal functionality
+    const modal = document.getElementById('dataModal');
+    const openBtn = document.getElementById('openModal');
+    const closeBtn = document.getElementById('closeModal');
+    openBtn.addEventListener('click', function() {
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    });
+    closeBtn.addEventListener('click', function() {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    });
+    window.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    });
+
+    // Graph Modal functionality
+    const graphModal = document.getElementById('graphModal');
+    const openGraphBtn = document.getElementById('openGraphModal');
+    const closeGraphBtn = document.getElementById('closeGraphModal');
+    openGraphBtn.addEventListener('click', function () {
+      graphModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    });
+    closeGraphBtn.addEventListener('click', function () {
+      graphModal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    });
+    window.addEventListener('click', function (e) {
+      if (e.target === graphModal) {
+        graphModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    });
+
+    // Animate stats counting
+    function animateValue(id, start, end, duration, suffix = '') {
+      const obj = document.getElementById(id);
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const value = Math.floor(progress * (end - start) + start);
+        obj.innerHTML = value.toLocaleString() + suffix;
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+      window.requestAnimationFrame(step);
+    }
+
+    // Start animations when stats section is in view
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateValue('studentsCount', 0, 4000000, 2000, '+');
+          animateValue('provinceCount', 0, 10, 1200);
+          animateValue('institutionsCount', 0, 200, 1600, '+');
+          animateValue('yearsData', 0, 14, 1000);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    observer.observe(document.querySelector('.stats-section'));
+  </script>
 </body>
 </html>

@@ -1,2 +1,0 @@
-# Humberteam-GIS-Project
-

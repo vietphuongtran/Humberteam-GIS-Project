@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="favicon.png" type="image/png">
+  <title>Methodology – International Student Trends</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #00c3e3;
+      --primary-dark: #0099b6;
+      --secondary: #007bff;
+      --dark: #0b2c3f;
+      --darker: #082230;
+      --light: #ffffff;
+      --gray: #64748b;
+      --light-gray: #e2e8f0;
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --radius-md: 8px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    nav {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: var(--shadow-md);
+    }
+
+    .logo img {
+      height: 2.5rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: var(--dark);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      font-size: 1.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .page-header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      padding: 6rem 2rem 4rem;
+      text-align: center;
+    }
+
+    .page-header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-header p {
+      color: #f1f5f9;
+      font-size: 1.125rem;
+    }
+
+    .section {
+      padding: 4rem 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .content-box {
+      background-color: var(--dark);
+      color: white;
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      margin-bottom: 2.5rem;
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .content-box h2 {
+      font-size: 1.75rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .content-box h3 {
+      font-size: 1.2rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: white;
+    }
+
+    .content-box p, .content-box li {
+      color: #e2e8f0;
+      font-size: 1rem;
+    }
+
+    .content-box ul, .content-box ol {
+      margin-left: 1.25rem;
+      margin-top: 0.5rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      background-color: var(--primary);
+      color: white;
+      text-decoration: none;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      margin-top: 1.5rem;
+      transition: var(--transition);
+    }
+
+    .btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    footer {
+      background-color: var(--darker);
+      color: rgba(255, 255, 255, 0.8);
+      padding: 4rem 2rem 2rem;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.5);
+      margin-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        background-color: white;
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        border-radius: var(--radius-md);
+        padding: 1rem;
+        box-shadow: var(--shadow-md);
+      }
+
+      .mobile-menu-btn {
+        display: block;
+        color: var(--dark);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav id="navbar">
+    <a href="index.html" class="logo">
+      <img src="images/Logo.png" alt="INTLMap Logo" style="height: 60px; margin-right: 10px;">
+    </a>
+    <span style="font-weight: 600; font-size: 1.5rem; color: var(--dark); white-space: nowrap;">
+  Data Visualization of International Student Distribution in Canada
+</span>
+    <button class="mobile-menu-btn" id="menuBtn">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="page-header">
+    <h1>Data Methodology</h1>
+    <p>How we collect, process, and analyze international student data</p>
+  </header>
+
+  <!-- Main Content -->
+  <section class="section">
+    <div class="content-box">
+      <h2>Our Data Sources</h2>
+      <p>We utilize multiple authoritative sources to ensure comprehensive and accurate reporting on international student trends in Canada:</p>
+      <ul>
+        <li><strong>Statistics Canada</strong>: Official government datasets on <a href="https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3710027701" target="_blank"> postsecondary enrollments</a></li>
+        <li>This project contains data from Statistics Canada website which falls under the Statistics Canada Open Licence. For more information, visit: <a href="https://www.statcan.gc.ca/en/reference/licence-faq" target="_blank">https://www.statcan.gc.ca/en/reference/licence-faq</a></li>
+      </ul>
+    </div>
+
+    <div class="content-box">
+      <h2>Data Collection Process</h2>
+      <p>Our data undergoes a rigorous 5-step collection and verification process:</p>
+      <ol>
+        <li><strong>Source Identification:</strong> We identify the most reliable and up-to-date sources for each data point.</li>
+        <li><strong>Data Extraction:</strong> Automated scripts and manual verification ensure accurate data capture.</li>
+        <li><strong>Normalization:</strong> Data from different sources is standardized to common formats and definitions.</li>
+        <li><strong>Validation:</strong> Statistical checks and cross-referencing verify data consistency.</li>
+        <li><strong>Publication:</strong> Final datasets are prepared for visualization and analysis.</li>
+      </ol>
+    </div>
+
+    <div class="content-box">
+      <h2>Analytical Methods</h2>
+      <p>We employ sophisticated statistical techniques to ensure meaningful insights:</p>
+      <ul>
+        <li>Time-series analysis for trend identification</li>
+        <li>Geospatial mapping for regional comparisons</li>
+        <li>Demographic breakdowns by country of origin</li>
+        <li>Institutional benchmarking</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-bottom">
+      <p>&copy; 2025 International Student Trends. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', () => {
+      if (navLinks.style.display === 'flex') {
+        navLinks.style.display = 'none';
+        menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+      } else {
+        navLinks.style.display = 'flex';
+        menuBtn.innerHTML = '<i class="fas fa-times"></i>';
+      }
+    });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        navLinks.style.display = 'flex';
+      } else {
+        navLinks.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
